@@ -2,7 +2,7 @@ from drafter import *
 from bakery import assert_equal
 from dataclasses import dataclass
 import random
-import pygame
+#import pygame
 
 #############################################################################
 # Assignment required code
@@ -13,9 +13,9 @@ set_site_information(
     a witch moving into her new home and encountering something strange.""",
     sources=["Official Drafter documentation, Google"],
     planning=["CISC108_FinalProject_DesignPhase.pdf"],
-    links=["https://github.com/UD-F25-CS1/cs1-website-f25-ellyward", "Youtube Link"]
+    links=["https://github.com/UD-F25-CS1/cs1-website-f25-ellyward", "https://youtu.be/E54YkotXk4s?si=wOTlMJGYxgO0J7-B"]
 )
-hide_debug_information()
+#hide_debug_information()
 set_website_title("Housewitching")
 set_website_framed(False)
 
@@ -28,7 +28,8 @@ set_website_style("none")
 #Custom website styling
 add_website_css("""
 body {
-    background-color: #AEDEFC;
+    background-color: #222222;
+    color: White;
     font-size: 40px;
     font-family: "Papyrus", sans-serif;
     width: 960px;
@@ -40,27 +41,43 @@ body {
 
 p {
     line-height: 1.5;
+    color: White;
+}
+
+h1 {
+    color: White;
 }
 
 img {
-  display: block;
-  margin: auto;
-  width: 500;
-  border: 15px solid #F5FBFF;
+    display: block;
+    margin: auto;
+    width: 500;
+    border: 15px solid White;
+    border-radius: 30px;
+    padding: 10px;
+  
 }
 
 button {
-    background-color: #F5FBFF;
+    background-color: #656565;
     font-family: "Papyrus", sans-serif;
     font-size: 30px;
+    color: White;
     text-align: center;
+    border-radius: 30px;
+    padding: 10px;
+    border: 5px solid White;
 }
 
 input[type="text"] {
-    background-color: #F5FBFF;
+    background-color: #656565;
     font-family: "Papyrus", sans-serif;
     font-size: 30px;
+    color: White;
     text-align: center;
+    border-radius: 30px;
+    padding: 10px;
+    border: 5px solid White;
 }
 """)
 
@@ -161,7 +178,7 @@ enemy = monsters[random.randint(0,2)]
 # Helper functions
 
 # Initialize mixer
-pygame.mixer.init()
+#pygame.mixer.init()
 
 #############################################################################
 # Introduction routes
@@ -170,9 +187,8 @@ pygame.mixer.init()
 def index(state: State) -> Page:
     """ The main page of the game, letting the player enter their name. """
     #Loads and loops the audio in the background
-    pygame.mixer.music.load("once_upon_a_time.mp3")
-    pygame.mixer.music.play(-1, 0.0)
-    
+    #pygame.mixer.music.load("once_upon_a_time.mp3")
+    #pygame.mixer.music.play(-1, 0.0)  
     return Page(state,[
         "<audio><source src='once_upon_a_time.mp3' type='audio/mpeg'></audio>"
         "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
@@ -453,9 +469,9 @@ def attic_window(state: State) -> Page:
     if state.updates.routes == "living_room":
         if state.status.is_monsters ==  True:
             #Stops current audio and plays new audio
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load("in_my_way.mp3")
-            pygame.mixer.music.play(-1, 0.0)
+            #pygame.mixer.music.stop()
+            #pygame.mixer.music.load("in_my_way.mp3")
+            #pygame.mixer.music.play(-1, 0.0)
             return Page(state,[
                 "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
                 "<br>",
@@ -481,9 +497,9 @@ def the_end(state: State) -> Page:
     if state.updates.routes == "fighting":
         state.updates.routes = "ending"
         #Stops current audio and plays new audio
-        pygame.mixer.music.stop()
-        pygame.mixer.music.load("fallen_down_reprise.mp3")
-        pygame.mixer.music.play(-1, 0.0)
+        #pygame.mixer.music.stop()
+        #pygame.mixer.music.load("fallen_down_reprise.mp3")
+        #pygame.mixer.music.play(-1, 0.0)
         return Page(state,[
             "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
             "<br>",
@@ -584,6 +600,15 @@ def hide(state: State) -> Page:
 @route
 def fight(state: State) -> Page:
     """ Page for when the player chooses to fight after the monster breaks in. """
+    #Player health can't go above 100
+    if state.health >= 100:
+        state.health = 100
+    #Player health cannot go below 0
+    if state.health <= 0:
+        state.health = 0
+    #Enemy health cannot go below 0
+    if enemy.health <= 0:
+        enemy.health = 0
     #Choosing to fight the monster without items
     if state.updates.routes == "confrontation":
         if state.items == []:
@@ -605,9 +630,9 @@ def fight(state: State) -> Page:
         #Choosing to fight the monster with items
         elif state.items != []:
             #Stops current audio and plays new audio
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load("battle_against_a_true_hero.mp3")
-            pygame.mixer.music.play(-1, 0.0)
+            #pygame.mixer.music.stop()
+            #pygame.mixer.music.load("battle_against_a_true_hero.mp3")
+            #pygame.mixer.music.play(-1, 0.0)
             return Page(state,[
                 "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
                 "<br>",
@@ -691,10 +716,10 @@ def fighting(state: State) -> Page:
     enemy.health -= state.damage
     state.health -= enemy.damage
     #Player health cannot go below 0
-    if state.health < 0:
+    if state.health <= 0:
         state.health = 0
     #Enemy health cannot go below 0
-    if enemy.health < 0:
+    if enemy.health <= 0:
         enemy.health = 0
     return Page(state,[        
         "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
@@ -713,13 +738,13 @@ def fighting(state: State) -> Page:
 @route
 def take_potion(state: State) -> Page:
     """ Functions for calculating health and damage during the fight. """
+    #Player health can't go above 100
+    if state.health >= 100:
+        state.health = 100
     #Only if potions are available
     if potion_2.quantity > 0:
-        #Player health can't go above 100
-        if state.health > 100:
-            state.health = 100
         #Number of potions can't go below 0
-        if potion_2.quantity < 0:
+        if potion_2.quantity <= 0:
             potion_2.quantity = 0
         #Every time the player uses a potion, the quantity will decrease by 1
         potion_2.quantity -= 1
@@ -790,9 +815,9 @@ def updated(state: State) -> Page:
 def win_screen(state: State) -> Page:
     """ The page for when the player wins the game. """
     #Stops current audio and plays new audio
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load("yippie.mp3")
-    pygame.mixer.music.play(1, 0.0)
+    #pygame.mixer.music.stop()
+    #pygame.mixer.music.load("yippie.mp3")
+    #pygame.mixer.music.play(1, 0.0)
     return Page(state,[
         "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
         "<br>",
@@ -808,9 +833,9 @@ def win_screen(state: State) -> Page:
 def game_over(state: State) -> Page:
     """ The page for the game over screen. """
     #Stops current audio and plays new audio
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load("small_shock.mp3")
-    pygame.mixer.music.play(1, 0.0)
+    #pygame.mixer.music.stop()
+    #pygame.mixer.music.load("small_shock.mp3")
+    #pygame.mixer.music.play(1, 0.0)
     return Page(state,[
         "✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
         "<br>",
@@ -825,6 +850,7 @@ def game_over(state: State) -> Page:
 @route
 def reset(state: State) -> Page:
     """ Resets the state class. """
+    
     state = State(
     "",
     [],
@@ -834,8 +860,13 @@ def reset(state: State) -> Page:
     Updates("", False)
     )
     
+    monsters[0].health = 80
+    monsters[1].health = 50
+    monsters[2].health = 30
+    
     #Stops the music
-    pygame.mixer.music.stop()
+    #pygame.mixer.music.stop()
+    
     return index(state)
 
 #############################################################################    
@@ -853,4 +884,544 @@ start_server(State(
 #############################################################################
 # Unit tests
 
+assert_equal(
+ index(State(name='', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='', is_hidden=False))),
+ Page(state=State(name='',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=False, monsters=[]),
+                 updates=Updates(routes='', is_hidden=False)),
+     content=["<audio><source src='once_upon_a_time.mp3' "
+              "type='audio/mpeg'></audio>✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.",
+              '<br>',
+              '<h1> HOUSEWITCHING </h1>',
+              '<br>',
+              'Welcome to your newly-bought home, young witch. What is your name?',
+              '<br>',
+              TextBox(name='name', kind='text', default_value='Young Witch'),
+              '<br>',
+              Button(text='Move In', url='/move_in'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
 
+assert_equal(
+ move_in(State(name='', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='', is_hidden=False)), 'Young Witch'),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=False, monsters=[]),
+                 updates=Updates(routes='move_in', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'Your name is Young Witch.',
+              'You step into your new home, finding yourself in a hallway past your front door.',
+              'Ahead of you seems to be the living room.',
+              Image(url='front_door.jpg', width=500, height=None),
+              '<br>',
+              Button(text='Explore your living room', url='/living_room'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ living_room(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='move_in', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=False, monsters=[]),
+                 updates=Updates(routes='move_in', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You step into the living room, ready to decorate your brand new abode.',
+              'You begin unpacking the boxes sitting in the corner.',
+              'After a while of setting out books and other knick knacks, you come across a photo.',
+              'Looking closer, you see its a bunch of old childhood photos.',
+              'Some are cute and nostalgic - making you look back on those old memories with fondness.',
+              'Others... well, lets just say anyone could tell you were definitely a troublemaker back then.',
+              "You find yourself getting lost in the little scrapbook, just remembering the good 'ol times.",
+              'So much so, that you almost miss that faint voice, whispering in the distance.',
+              Image(url='living_room.jpeg', width=700, height=None),
+              '<br>',
+              Button(text='What is that?', url='/updated'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ updated(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='move_in', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=False, monsters=[]),
+                 updates=Updates(routes='living_room', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              Text("'Young Witch.'", {'style_font-style': 'italic'}),
+              'A voice calls your name from somewhere within the house...',
+              "It's coming from the attic.",
+              Image(url='living_room.jpeg', width=700, height=None),
+              '<br>',
+              Button(text='Go to the attic', url='/attic'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ attic(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='living_room', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=False, monsters=[]),
+                 updates=Updates(routes='living_room', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'As you open the attic door,',
+              "you can't help but cough due to the sheer amount of dust released into the air.",
+              'You climb the ladder carefully, peeking your head through the attic entrance and looking around.',
+              'The room is empty and dark,',
+              'save for for the one patch of floor illuminated by the setting sun outside the singular window.',
+              'What?',
+              "You look closer... there's something on the ground.",
+              'You walk into the strip of light, eyeing the object on the floor.',
+              'It looks like a little statue of a woman, holding a glowing orb in its hands.',
+              'The orb is swirling with a shining rainbow of colors, leaving you enamored and drawing you in.',
+              'Wanting to inspect the artifact further, you pick it up - ',
+              'Only for it to crumble in your hands almost immediately.',
+              'You sit in dumfounded silence as you watch the bits of statue tumble onto the floor,',
+              'and that little orb roll away from you and extinguish in the darkness.',
+              "You're about to retrieve it when suddenly, it feels as if the entire house is being shaken.",
+              'You fall to the ground, looking up to window, just to find a pitch black void beyond the glass.',
+              "'Welp.', you think, 'That can't be good.'",
+              Image(url='attic.jpg', width=700, height=None),
+              '<br>',
+              Button(text='Try to look out the window anyway', url='/attic_window'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ attic_window(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='living_room', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=False, monsters=[]),
+                 updates=Updates(routes='living_room', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'As you stare outside your attic window,',
+              'you can no longer see the forest trees that surrounded your property.',
+              "The void stretches on, making you think there's nothing there at all.",
+              "That's when something smacks against the window pane, hard.",
+              'You fall back onto the ground, startled, eyes wide.',
+              "There's a face in the window.",
+              Image(url='attic_window.jpg', width=500, height=None),
+              '<br>',
+              Button(text='What is that', url='/status'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ status(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=False, monsters=[]), updates=Updates(routes='living_room', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='living_room', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'A grotesque figure looks back at you from the window,',
+              "it's face a distorted white mask surrounded by matted black hair.",
+              'It hold eye contact with you for a moment -',
+              "even with it's lack of eyes, you know its staring at you.",
+              'Then a large palm rises from below the window - and begins pounding on the glass.',
+              'Immediately, you head for the attic door, scrambling to grasp the handle.',
+              'Just as you begin to descend, you hear a crack, followed by a loud shatter.',
+              'It got inside.',
+              Image(url='monster_1.gif', width=700, height=None),
+              '<br>',
+              Button(text='Run.', url='/updated'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ updated(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='living_room', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='run', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'Loud cracks and bangs echo from beyond the attic door.',
+              "It'll only hold that monster off for so long.",
+              'What will you do?',
+              Image(url='living_room.jpeg', width=700, height=None),
+              '<br>',
+              Button(text='Hide', url='/hide'),
+              Button(text='Run to kitchen', url='/kitchen'),
+              Button(text='Leave', url='/front_door'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ hide(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='run', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='hiding', is_hidden=True)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You hide behind a couch in the corner of your living room, trying to still your rapid breathing.',
+              'You can still hear the rhythmic thumping from the attic.',
+              "The monster hasn't gotten in yet.",
+              "Maybe there's something else you can do?",
+              Image(url='hiding.png', width=700, height=None),
+              '<br>',
+              Button(text='Try something else', url='/living_room'),
+              Button(text='Keep hiding', url='/updated'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ updated(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='hiding', is_hidden=True))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='kept_hiding', is_hidden=True)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You keep hiding.',
+              "With a deafening crash, the monster makes it's way into your home.",
+              'You shrink back into the closet at the beast stalks around the living room.',
+              'Through the slats on the closet door, you can see the light slowly dimming,',
+              'leaving your living room pitch black.',
+              "You don't know how much time passed while you sat in that closet.",
+              'The darkness felt almost heavy around you - and soon, you find yourself drifting into sleep.',
+              'When the darkness finally lifts from your home, the monsters are gone - and so are you.',
+              'Your house goes up for sale again and everyone wonders where you could have possibly gone.',
+              'At the very least, your demise was peaceful.',
+              Image(url='sleep_forever.jpg', width=700, height=None),
+              '<br>',
+              Button(text="You'll sleep forever", url='/game_over'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ updated(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='kept_hiding', is_hidden=True))),
+ None)
+
+assert_equal(
+ game_over(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='kept_hiding', is_hidden=True))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='kept_hiding', is_hidden=True)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              "You've met with a terrible fate, haven't you?",
+              Image(url='game_over.jpg', width=800, height=None),
+              '<br>',
+              Button(text='Try Again', url='/reset'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ front_door(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='run', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='run', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You rush for the front door,',
+              "hearing the crash of the attic door being broken off it's hinges behind you.",
+              'You sprint faster towards the front door,',
+              'loud thumping and scraping rapidly growing closer behind you.',
+              'You narrowly avoid a giant hand grasping at your back,',
+              'just as you throw open the door and cross the threshold onto the front lawn.',
+              'You stop running, turning to see the crude monster slink back into the shadows of your home.',
+              'For a moment, you breathe a sigh of relief, just happy to have escaped.',
+              'Honestly, no one can blame you for forgetting all the other monsters outside your house.',
+              "At the very least, they're quick to rip you apart - you don't feel a thing.",
+              '...Almost.',
+              Image(url='monsters_woods.jpg', width=800, height=None),
+              '<br>',
+              Button(text='You Died', url='/game_over'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ kitchen(State(name='Young Witch', items=[], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='run', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='in_kitchen', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'The kitchen is silent, though faintly,',
+              "you can still hear the creature trying to break it's way through the attic door.",
+              'Maybe something in here can be of use to you.',
+              Image(url='kitchen.jpeg', width=700, height=None),
+              '<br>',
+              Button(text='Look around.', url='/updated'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ front_door(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=5, health=0, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='confrontation', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=5, health=0, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='confrontation', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'As you move to run, you hear something drop and roll across the floor.',
+              "It's an Invisibility Potion!",
+              "It must've been with the items you found.",
+              'You grab the potion and take off towards the front door.',
+              "As you run, you hear the crash of the attic door being broken off it's hinges behind you.",
+              'You sprint faster towards the front door,',
+              'hearing loud thumping and scraping come to a halt behind you.',
+              "It looks like the monster can't see you!",
+              'You close in on the door, throwing it open and crossing the threshold onto the front lawn.',
+              'You stop running and turn to look through the front door,',
+              'seeing the crude monster still stalking around your living room.',
+              'You breathe a sigh of relief, just happy to have escaped.',
+              'As you turn to leave, you almost bump into another sizeable and horrifying creature.',
+              "It's a good thing you took that invisibility potion -",
+              'you entirely forgot about the monsters outside!',
+              'You head off into the forest, further and further away from your new home.',
+              "Hopefully, the monsters don't mess the place up too bad - you would like your deposit back.",
+              Image(url='got_away.jpg', width=700, height=None),
+              '<br>',
+              Button(text='Escape', url='/win_screen'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ win_screen(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=5, health=0, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='confrontation', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=5, health=0, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='confrontation', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You Survived!',
+              Image(url='you_win.jpg', width=700, height=None),
+              '<br>',
+              Button(text='Restart', url='/reset'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ living_room(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=4, health=0, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='confrontation', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=4, health=0, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='confrontation', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'A deafening crash rings out from the living room.',
+              'As you leave the kitchen, you come face to face with the monstrous creature.',
+              "You've been spotted.",
+              "Looks like there's no turning back now.",
+              Image(url='monster_2.jpg', width=700, height=None),
+              '<br>',
+              Button(text='Fight', url='/fight'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ fight(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=4, health=0, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='confrontation', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=4, health=0, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=100,
+                 damage=10,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='confrontation', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'Looks like you decided to fight.',
+              'Hopefully, luck is on your side.',
+              Image(url='fight_stance.jpg', width=600, height=None),
+              '<br>',
+              Button(text='Make a move', url='/updated'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ fighting(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=4, health=0, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=100, damage=10, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='fighting', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=4, health=0, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=92,
+                 damage=9,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='fighting', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You attack the monster.',
+              'It takes 9 damage.',
+              'The monster strikes back.',
+              'You take 8 damage.',
+              Image(url='punching.gif', width=700, height=None),
+              '<br>',
+              Button(text='Keep fighting', url='/fight'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ take_potion(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=4, health=0, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=73, damage=2, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='fighting', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=3, health=10, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=83,
+                 damage=2,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='fighting', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You drink a Healing Potion.',
+              'You recover 10 health.',
+              Image(url='drink.gif', width=500, height=None),
+              '<br>',
+              Button(text='Keep fighting', url='/fight'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ take_potion(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=0, health=5, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=99, damage=2, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='fighting', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=0, health=5, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=99,
+                 damage=2,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='fighting', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'That was your last healing potion.',
+              "You don't have anymore.",
+              Image(url='No_potions.png', width=500, height=None),
+              '<br>',
+              Button(text='Keep fighting', url='/fight'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ fight(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=0, health=5, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=34, damage=9, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='fighting', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=0, health=5, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=34,
+                 damage=9,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='fighting', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'Young Witch',
+              'Your Health: 34',
+              'Your Items:',
+              'Health Potion: 0',
+              '⊹ ࣪ ˖ ꒰ঌ ♡ ໒꒱ ⊹ ࣪ ˖',
+              '???',
+              'Enemy Health: 0',
+              '⊹ ࣪ ˖ ꒰ঌ ♡ ໒꒱ ⊹ ࣪ ˖',
+              'Wow, that went better than expected.',
+              Image(url='battle_won.png', width=800, height=None),
+              '<br>',
+              Button(text='You win!', url='/the_end'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ the_end(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=0, health=5, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=34, damage=9, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='fighting', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=0, health=5, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=34,
+                 damage=9,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='ending', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You stand there for a moment - breathing heavy as you try to steady yourself.',
+              'After a few seconds you sink to the floor,',
+              'sighing in relief as the last of your adrenaline wears off.',
+              'You look down at the knife in your hand, covered in the blood of that wretched creature.',
+              'It glints in the sunlight, as pristine as when you bought it.',
+              'Wait?',
+              'Sunlight?',
+              'Its then that you notice the thick fog of darkness that once enveloped your home is no more.',
+              'Rays of sunlight are cast from your living room window,',
+              'shining upon the disintegrating body of the slain monster.',
+              '?',
+              'Whats that on the floor?',
+              Image(url='the_orb.jpg', width=700, height=None),
+              '<br>',
+              Button(text='Pick it up', url='/the_end'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
+
+assert_equal(
+ the_end(State(name='Young Witch', items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0), Item(name='Health Potion', quantity=0, health=5, damage=0), Item(name='Knife', quantity=1, health=0, damage=0)], health=34, damage=9, status=Status(is_monsters=True, monsters=[]), updates=Updates(routes='ending', is_hidden=False))),
+ Page(state=State(name='Young Witch',
+                 items=[Item(name='Invisibility Potion', quantity=1, health=0, damage=0),
+                        Item(name='Health Potion', quantity=0, health=5, damage=0),
+                        Item(name='Knife', quantity=1, health=0, damage=0)],
+                 health=34,
+                 damage=9,
+                 status=Status(is_monsters=True, monsters=[]),
+                 updates=Updates(routes='ending', is_hidden=False)),
+     content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
+              '<br>',
+              'You reach for the item on the ground, holding it up in the sunlight for a better look.',
+              'The small sphere is only slightly bigger than a marble and feels smooth to the touch.',
+              'However, it glows a brilliant variety of colors,',
+              'swirling together, reminiscent of the cosmos in the starry night sky.',
+              'It kinda looks like that orb you broke earlier.',
+              'The orb glows brighter for a moment,',
+              'and outside your window, you see the last of the monsters slip away into the treeline.',
+              "You don't know why the monster had this, but you definitely feel like you should keep it.",
+              'If nothing else, it at least seems to keep other creatures off your property.',
+              'You place the orb in a little jewlery box and place it on the mantle above your fireplace.',
+              'For your own sanity (and physical well-being),',
+              "you'll be careful not to break this one.",
+              Image(url='the_end.png', width=800, height=None),
+              '<br>',
+              Button(text="Guess we'll have to see about that", url='/win_screen'),
+              '<br>',
+              '✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.']))
