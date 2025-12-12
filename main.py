@@ -477,12 +477,12 @@ def attic_window(state: State) -> Page:
         if state.status.is_monsters ==  True:
             #Stops current audio and plays new audio
             add_website_header(    
-                """
-                <audio autoplay loop>
-                    <source src="in_my_way.mp3" type="audio/mpeg">
-                </audio>
-                """
-                )
+            """
+            <audio autoplay loop>
+                <source src="in_my_way.mp3" type="audio/mpeg">
+            </audio>
+            """
+            )
             #pygame.mixer.music.stop()
             #pygame.mixer.music.load("in_my_way.mp3")
             #pygame.mixer.music.play(-1, 0.0)
