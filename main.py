@@ -2,6 +2,7 @@ from drafter import *
 from bakery import assert_equal
 from dataclasses import dataclass
 import random
+from drafter import add_website_header
 #import pygame
 
 #############################################################################
@@ -187,6 +188,7 @@ enemy = monsters[random.randint(0,2)]
 def index(state: State) -> Page:
     """ The main page of the game, letting the player enter their name. """
     #Loads and loops the audio in the background
+    add_website_header("""<audio><src="once_upon_a_time.mp3" autoplay loop></audio>""")
     #pygame.mixer.music.load("once_upon_a_time.mp3")
     #pygame.mixer.music.play(-1, 0.0)  
     return Page(state,[
