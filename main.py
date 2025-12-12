@@ -188,7 +188,12 @@ enemy = monsters[random.randint(0,2)]
 def index(state: State) -> Page:
     """ The main page of the game, letting the player enter their name. """
     #Loads and loops the audio in the background
-    add_website_header("""<audio><src="once_upon_a_time.mp3" autoplay loop></audio>""")
+    add_website_header(
+    """
+        <audio loop controls autoplay loop>
+            <source src="once_upon_a_time.mp3" type="audio/mpeg">
+        </audio>
+    """)
     #pygame.mixer.music.load("once_upon_a_time.mp3")
     #pygame.mixer.music.play(-1, 0.0)  
     return Page(state,[
