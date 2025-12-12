@@ -160,17 +160,6 @@ class State:
     updates: Updates
 
 #############################################################################
-# Audio
-
-add_website_header(
-    """
-    <audio autoplay loop>
-        <source src="once_upon_a_time.mp3" type="audio/mpeg">
-    </audio>
-    """
-    )
-
-#############################################################################
 # Global variables
 
 #potions
@@ -199,6 +188,13 @@ enemy = monsters[random.randint(0,2)]
 def index(state: State) -> Page:
     """ The main page of the game, letting the player enter their name. """
     #Loads and loops the audio in the background
+    add_website_header(
+    """
+    <audio autoplay loop>
+        <source src="once_upon_a_time.mp3" type="audio/mpeg">
+    </audio>
+    """
+    )
     #pygame.mixer.music.load("once_upon_a_time.mp3")
     #pygame.mixer.music.play(-1, 0.0)  
     return Page(state,[
@@ -480,6 +476,13 @@ def attic_window(state: State) -> Page:
     if state.updates.routes == "living_room":
         if state.status.is_monsters ==  True:
             #Stops current audio and plays new audio
+                add_website_header(
+                """
+                <audio autoplay loop>
+                    <source src="in_my_way.mp3" type="audio/mpeg">
+                </audio>
+                """
+                )
             #pygame.mixer.music.stop()
             #pygame.mixer.music.load("in_my_way.mp3")
             #pygame.mixer.music.play(-1, 0.0)
