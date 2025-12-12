@@ -476,7 +476,7 @@ def attic_window(state: State) -> Page:
     if state.updates.routes == "living_room":
         if state.status.is_monsters ==  True:
             #Stops current audio and plays new audio
-                add_website_header(
+            add_website_header(    
                 """
                 <audio autoplay loop>
                     <source src="in_my_way.mp3" type="audio/mpeg">
