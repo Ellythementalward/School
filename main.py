@@ -16,7 +16,7 @@ set_site_information(
     planning=["CISC108_FinalProject_DesignPhase.pdf"],
     links=["https://github.com/UD-F25-CS1/cs1-website-f25-ellyward", "https://youtu.be/E54YkotXk4s?si=wOTlMJGYxgO0J7-B"]
 )
-#hide_debug_information()
+hide_debug_information()
 set_website_title("Housewitching")
 set_website_framed(False)
 
@@ -190,7 +190,7 @@ def index(state: State) -> Page:
     #Loads and loops the audio in the background
     add_website_header(
     """
-        <audio loop controls autoplay loop>
+        <audio autoplay loop>
             <source src="once_upon_a_time.mp3" type="audio/mpeg">
         </audio>
     """)
