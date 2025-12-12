@@ -971,7 +971,7 @@ assert_equal(
                  updates=Updates(routes='living_room', is_hidden=False)),
      content=['✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.✧˖°.',
               '<br>',
-              Text("'Young Witch.'", {'style_font-style': 'italic'}),
+              'Young Witch.',
               'A voice calls your name from somewhere within the house...',
               "It's coming from the attic.",
               Image(url='living_room.jpeg', width=700, height=None),
